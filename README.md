@@ -1,11 +1,11 @@
 # C Boilerplate Generator for VS Code
 
-A Visual Studio Code extension that generates **clean, exam-ready C boilerplate code**
+A Visual Studio Code extension that generates clean, exam-ready C boilerplate code
 for university programming assignments.
 
 The extension parses the problem statement written as a multiline C comment and
 automatically generates a structured C file layout with menus, function stubs,
-and best practices — **without generating full solutions**.
+and best practices — without generating full solutions.
 
 > 🚧 This extension is under active development.
 
@@ -20,22 +20,32 @@ Many university C assignments follow a repetitive structure:
 - No global variables
 - Clear separation between utility code and requirements
 
-This extension aims to **save time** by generating only the boilerplate structure,
+This extension aims to save time by generating only the boilerplate structure,
 so you can focus on implementing the actual logic.
 
 ---
 
 ## ⚙️ Current Features
 
-- Adds a command:  
-  **`Generate C Assignment Boilerplate`**
-- Accesses the active editor and target file
+- Adds a command: `Generate C Assignment Boilerplate`
+- Reads the active editor content to extract problem statements
+- Extracts the first multiline comment (`/* ... */`) from the file
+
+---
+
+## 🔄 Development Progress
+
+- Stage 1: Initial extension setup and project scaffolding ✅
+- Stage 2: Command registration and VS Code API integration ✅
+- Stage 3: Reading the full content of the active editor ✅
+- Stage 4: Extracting the first multiline comment ✅
+- Stage 5: Parsing menu options (planned)
+- Stage 6: Generating boilerplate code (planned)
 
 ---
 
 ## 🛠️ Planned Features
 
-- Detect and parse the first multiline C comment (`/* ... */`)
 - Extract menu options from problem statements (e.g. `1.`, `2.`, `0. Exit`)
 - Generate:
   - Standard includes (`stdio.h`, `stdlib.h`, etc.)
@@ -45,16 +55,16 @@ so you can focus on implementing the actual logic.
     - `MAIN`
   - A `do { ... } while(opt != 0);` menu loop
   - A `switch(opt)` with placeholder cases
-- Exam-ready, readable, and clean C code
+- Exam-ready, readable, and well-structured C code
 
 ---
 
 ## 📌 Design Principles
 
-- **No global variables**
-- **One function per menu option**
-- **Clear separation of concerns**
-- **No solution logic generated**
+- No global variables
+- One function per menu option
+- Clear separation of concerns
+- No solution logic generated
 - Heuristic-based parsing (not strict NLP)
 
 ---
@@ -63,7 +73,7 @@ so you can focus on implementing the actual logic.
 
 1. Write your assignment problem as a multiline comment at the top of a `.c` file
 2. Open Command Palette (`Ctrl+Shift+P`)
-3. Run **Generate C Assignment Boilerplate**
+3. Run `Generate C Assignment Boilerplate`
 4. Fill in the logic manually
 
 ---
@@ -90,11 +100,21 @@ so you can focus on implementing the actual logic.
 
 ---
 
+## 🤝 Contributing
+
+This project is a learning experiment. You can:
+
+- Fork the repo
+- Open issues or pull requests
+- Explore VS Code API, TypeScript, or testing workflows
+
+---
+
 ## 📚 Development Notes
 
 This project is developed incrementally using:
+
 - TypeScript
 - VS Code Extension API
+- Jest for unit tests on pure logic modules
 - Small feature branches and commits
-
----

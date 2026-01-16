@@ -1,5 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 import * as vscode from 'vscode';
+import { extractFirstMultilineComment } from './utils/parser';
 
 // This method is called the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -13,16 +14,22 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		const document = editor.document;
-		const fullText = document.getText();	// read entire file
+		const fullText = document.getText(); // read entire file
+		const problemComment = extractFirstMultilineComment(fullText);
 
-		// Log full content
+		if (!problemComment) {
+			vscode.window.showWarningMessage('No multiline comment found in this file.');
+			return;
+		}
+
+		// Log the extracted comment
 		const output = vscode.window.createOutputChannel('C Boilerplate');
 		output.show(true);
-		output.appendLine('--- FILE CONTENT START ---');
-		output.appendLine(fullText);
-		output.appendLine('--- FILE CONTENT END ---');
+		output.appendLine('--- PROBLEM STATEMENT START ---');
+		output.appendLine(problemComment);
+		output.appendLine('--- PROBLEM STATEMENT END ---');
 
-		vscode.window.showInformationMessage('File content read successfully! ( check Debug console )');
+		vscode.window.showInformationMessage('Problem statement extracted. Check console for details.');
 	});
 
 	context.subscriptions.push(disposable);
