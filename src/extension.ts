@@ -1,6 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 import * as vscode from 'vscode';
-import { extractFirstMultilineComment } from './utils/parser';
+import { extractFirstMultilineComment, parseMenuOptions } from './utils/parser';
 
 // This method is called the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -21,13 +21,23 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showWarningMessage('No multiline comment found in this file.');
 			return;
 		}
+	
+	const menuOptions = parseMenuOptions(problemComment);
 
-		// Log the extracted comment
-		const output = vscode.window.createOutputChannel('C Boilerplate');
-		output.show(true);
-		output.appendLine('--- PROBLEM STATEMENT START ---');
-		output.appendLine(problemComment);
-		output.appendLine('--- PROBLEM STATEMENT END ---');
+    // Log the extracted comment and menu options
+    const output = vscode.window.createOutputChannel('C Boilerplate');
+    output.show(true);
+    output.appendLine('--- PROBLEM STATEMENT START ---');
+    output.appendLine(problemComment);
+    output.appendLine('--- PROBLEM STATEMENT END ---');
+    output.appendLine('--- MENU OPTIONS ---');
+    menuOptions.forEach(opt =>
+      output.appendLine(`${opt.value}: ${opt.label}`)
+    );
+
+    vscode.window.showInformationMessage(
+      `Problem statement and ${menuOptions.length} menu option(s) extracted.`
+    );
 
 		vscode.window.showInformationMessage('Problem statement extracted. Check console for details.');
 	});
