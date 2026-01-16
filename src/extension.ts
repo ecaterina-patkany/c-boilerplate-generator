@@ -12,7 +12,17 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 
-		vscode.window.showInformationMessage(`Active file: ${editor.document.fileName}`);
+		const document = editor.document;
+		const fullText = document.getText();	// read entire file
+
+		// Log full content
+		const output = vscode.window.createOutputChannel('C Boilerplate');
+		output.show(true);
+		output.appendLine('--- FILE CONTENT START ---');
+		output.appendLine(fullText);
+		output.appendLine('--- FILE CONTENT END ---');
+
+		vscode.window.showInformationMessage('File content read successfully! ( check Debug console )');
 	});
 
 	context.subscriptions.push(disposable);
